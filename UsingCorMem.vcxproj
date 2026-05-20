@@ -23,7 +23,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{19037D5B-6296-D37D-F1B4-BF5A5F7A764C}</ProjectGuid>
     <RootNamespace>UsingCorMem</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
     <ProjectName>DriverLoader</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -43,13 +43,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -131,13 +131,17 @@
   <ItemGroup>
     <ClInclude Include="BiosToolCommonDriver.h" />
     <ClInclude Include="BiosToolCommonDriverBin.hpp" />
+    <ClInclude Include="BootRepair.h" />
+    <ClInclude Include="BootRepairBin.hpp" />
     <ClInclude Include="CorMem.h" />
     <ClInclude Include="CorMemBin.hpp" />
     <ClInclude Include="DriverLoader.h" />
     <ClInclude Include="DriverProvider.hpp" />
     <ClInclude Include="DriverService.hpp" />
+    <ClInclude Include="DriverWorker.hpp" />
     <ClInclude Include="FileUtils.hpp" />
     <ClInclude Include="Log.hpp" />
+    <ClInclude Include="ObjectProxy.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resource.hpp" />
     <ClInclude Include="Singleton.hpp" />
@@ -145,10 +149,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BiosToolCommonDriver.cpp" />
+    <ClCompile Include="BootRepair.cpp" />
     <ClCompile Include="CorMem.cpp" />
     <ClCompile Include="DriverLoader.cpp" />
     <ClCompile Include="DriverProvider.cpp" />
     <ClCompile Include="DriverService.cpp" />
+    <ClCompile Include="DriverWorker.cpp" />
     <ClCompile Include="FileUtils.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Singleton.cpp" />

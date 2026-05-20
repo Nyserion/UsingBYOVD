@@ -51,11 +51,6 @@ namespace DriverLoader
 
 	auto GetKernelBase() -> ULONG64;
 
-	auto InitializeDriver() -> BOOLEAN;
-
-	VOID UninitializeDriver();
-
-
 
 	BOOLEAN
 	PrivilegeEscalation(

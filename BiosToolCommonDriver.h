@@ -4,6 +4,7 @@
 #include "DriverProvider.hpp"
 #include "DriverService.hpp"
 #include "Singleton.hpp"
+#include "ObjectProxy.hpp"
 
 class BiosToolCommonDriver final : 
 	public DriverProvider<BiosToolCommonDriver>,
@@ -60,20 +61,4 @@ private:
 	BOOLEAN			m_bInitialized{ FALSE };
 };
 
-
-struct BiosToolCommonDriverProxy final
-{
-	constexpr BiosToolCommonDriverProxy() noexcept = default;
-
-	BiosToolCommonDriverProxy(const BiosToolCommonDriverProxy&) = delete;
-	BiosToolCommonDriverProxy& operator=(const BiosToolCommonDriverProxy&) = delete;
-	BiosToolCommonDriverProxy(BiosToolCommonDriverProxy&&) = delete;
-	BiosToolCommonDriverProxy& operator=(BiosToolCommonDriverProxy&&) = delete;
-
-	BiosToolCommonDriver* operator->() const noexcept
-	{
-		return std::addressof(BiosToolCommonDriver::Instance());
-	}
-};
-
-inline constexpr BiosToolCommonDriverProxy g_BiosToolCommonDriver{};
+inline constexpr ObjectProxy<BiosToolCommonDriver> g_BiosToolCommonDriver{};

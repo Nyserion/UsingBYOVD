@@ -13,15 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="BYOVD">
+      <UniqueIdentifier>{48316cae-883f-4c78-a1cc-ab86b1eb55f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DriverUtils">
+      <UniqueIdentifier>{a606906d-de0d-4601-b49e-c37274c16fe6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CorMem.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Resource.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="DriverService.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="FileUtils.hpp">
@@ -36,33 +36,45 @@
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="BiosToolCommonDriver.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="BiosToolCommonDriverBin.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CorMemBin.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="DriverLoader.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="DriverProvider.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Singleton.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="BiosToolCommonDriverBin.hpp">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
+    <ClInclude Include="BiosToolCommonDriver.h">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
+    <ClInclude Include="CorMem.h">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
+    <ClInclude Include="CorMemBin.hpp">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverService.hpp">
+      <Filter>DriverUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverProvider.hpp">
+      <Filter>DriverUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverLoader.h">
+      <Filter>DriverUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverWorker.hpp">
+      <Filter>DriverUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectProxy.hpp">
+      <Filter>DriverUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="BootRepair.h">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
+    <ClInclude Include="BootRepairBin.hpp">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CorMem.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="DriverService.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="FileUtils.cpp">
@@ -71,17 +83,29 @@
     <ClCompile Include="Utils.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="BiosToolCommonDriver.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="DriverLoader.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="DriverProvider.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Singleton.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CorMem.cpp">
+      <Filter>BYOVD</Filter>
+    </ClCompile>
+    <ClCompile Include="BiosToolCommonDriver.cpp">
+      <Filter>BYOVD</Filter>
+    </ClCompile>
+    <ClCompile Include="DriverService.cpp">
+      <Filter>DriverUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="DriverProvider.cpp">
+      <Filter>DriverUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="DriverLoader.cpp">
+      <Filter>DriverUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="DriverWorker.cpp">
+      <Filter>DriverUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="BootRepair.cpp">
+      <Filter>BYOVD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

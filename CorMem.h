@@ -4,6 +4,7 @@
 #include "DriverProvider.hpp"
 #include "DriverService.hpp"
 #include "Singleton.hpp"
+#include "ObjectProxy.hpp"
 
 class CorMem final : 
 	public DriverProvider<CorMem>,
@@ -60,19 +61,6 @@ private:
 	DriverService*	m_pDriverService{ nullptr };
 };
 
-struct CorMemProxy final
-{
-	constexpr CorMemProxy() noexcept = default;
 
-	CorMemProxy(const CorMemProxy&) = delete;
-	CorMemProxy& operator=(const CorMemProxy&) = delete;
-	CorMemProxy(CorMemProxy&&) = delete;
-	CorMemProxy& operator=(CorMemProxy&&) = delete;
 
-	CorMem* operator->() const noexcept
-	{
-		return std::addressof(CorMem::Instance());
-	}
-};
-
-inline constexpr CorMemProxy g_CorMem{};
+inline constexpr ObjectProxy<CorMem> g_CorMem{};

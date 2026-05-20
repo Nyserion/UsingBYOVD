@@ -135,7 +135,7 @@ NTSTATUS DriverService::LoadDriver()
 	UNICODE_STRING ustrDriver{};
 	RtlInitUnicodeString(&ustrDriver, m_wRegDriverPath.c_str());
 	ntStatus = LoadDriver(&ustrDriver);
-	if (ntStatus == STATUS_OBJECT_NAME_COLLISION)
+	if (ntStatus == STATUS_OBJECT_NAME_EXISTS)
 	{
 		LOGW("[-] Driver already loaded, attempting to unload first...\n");
 		ntStatus = UnloadDriver(&ustrDriver);
@@ -148,13 +148,18 @@ NTSTATUS DriverService::LoadDriver()
 		LOGW(std::format(L"[+] NtLoadDriver after unload: 0x{:X}\n", ntStatus));
 	}
 
-	if (!NT_SUCCESS(ntStatus))
+	if (!NT_SUCCESS(ntStatus) && ntStatus != STATUS_OBJECT_NAME_COLLISION)
 	{
 		LOGW("[-] Load failed, cleaning registry...\n");
 		RegDeleteTreeW(HKEY_LOCAL_MACHINE, m_wRegServicePath.c_str());
 
 		m_bIsRegisted = FALSE;
 		return ntStatus;
+	}
+
+	if (ntStatus == STATUS_OBJECT_NAME_COLLISION)
+	{
+		return STATUS_SUCCESS;
 	}
 
 	return ntStatus;
