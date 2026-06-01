@@ -19,6 +19,9 @@
     <Filter Include="DriverUtils">
       <UniqueIdentifier>{a606906d-de0d-4601-b49e-c37274c16fe6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MappingDriverBin">
+      <UniqueIdentifier>{564c907f-86c3-4870-a5f6-3eaba83fa146}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Resource.hpp">
@@ -78,6 +81,15 @@
     <ClInclude Include="SuperFetch.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="KernelUtils.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PEUtils.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MappingDriverBin.hpp">
+      <Filter>MappingDriverBin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -112,6 +124,12 @@
     </ClCompile>
     <ClCompile Include="BootRepair.cpp">
       <Filter>BYOVD</Filter>
+    </ClCompile>
+    <ClCompile Include="KernelUtils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PEUtils.cpp">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

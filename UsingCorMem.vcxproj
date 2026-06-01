@@ -142,8 +142,11 @@
     <ClInclude Include="DriverService.hpp" />
     <ClInclude Include="DriverWorker.hpp" />
     <ClInclude Include="FileUtils.hpp" />
+    <ClInclude Include="KernelUtils.hpp" />
     <ClInclude Include="Log.hpp" />
+    <ClInclude Include="MappingDriverBin.hpp" />
     <ClInclude Include="ObjectProxy.hpp" />
+    <ClInclude Include="PEUtils.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resource.hpp" />
     <ClInclude Include="Singleton.hpp" />
@@ -160,7 +163,9 @@
     <ClCompile Include="DriverService.cpp" />
     <ClCompile Include="DriverWorker.cpp" />
     <ClCompile Include="FileUtils.cpp" />
+    <ClCompile Include="KernelUtils.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="PEUtils.cpp" />
     <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>

@@ -29,3 +29,9 @@ DriverLoader.exe <kill processid>
 **代码来源于redteamfortress（https://github.com/redteamfortress）的项目PPLShade（https://github.com/redteamfortress/PPLShade）**
 
 **The code is derived from the PPLShade project（https://github.com/redteamfortress/PPLShade）, which is authored by redteamfortress（https://github.com/redteamfortress）. Further information on this project can be found on the redteamfortress GitHub page.**
+
+
+Loader mapping driver
+![image](./LoaderMappingDriver_2026-06-01_123521_640.png)
+
+**代码已经更新**

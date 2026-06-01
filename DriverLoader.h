@@ -70,5 +70,12 @@ namespace DriverLoader
 		ULONG			OffsetOfSignatureLevel,
 		PUCHAR			SignatureLevel);
 
+
+	auto InitMemoryManager()->BOOLEAN;
+
+	BOOLEAN
+	MapperDriver(
+		const PUCHAR DriverData,
+		AllocationMode Mode = AllocationMode::AllocatePool);
 }
 
