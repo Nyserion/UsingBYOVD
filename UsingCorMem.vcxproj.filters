@@ -22,18 +22,12 @@
     <Filter Include="MappingDriverBin">
       <UniqueIdentifier>{564c907f-86c3-4870-a5f6-3eaba83fa146}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{b6a7d9f8-98d6-48f6-9efe-39d7bba61c94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Resource.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="FileUtils.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Log.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
@@ -42,94 +36,100 @@
     <ClInclude Include="Singleton.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="BiosToolCommonDriverBin.hpp">
-      <Filter>BYOVD</Filter>
-    </ClInclude>
-    <ClInclude Include="BiosToolCommonDriver.h">
-      <Filter>BYOVD</Filter>
-    </ClInclude>
-    <ClInclude Include="CorMem.h">
-      <Filter>BYOVD</Filter>
-    </ClInclude>
-    <ClInclude Include="CorMemBin.hpp">
-      <Filter>BYOVD</Filter>
-    </ClInclude>
-    <ClInclude Include="DriverService.hpp">
-      <Filter>DriverUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="DriverProvider.hpp">
-      <Filter>DriverUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="DriverLoader.h">
-      <Filter>DriverUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="DriverWorker.hpp">
-      <Filter>DriverUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectProxy.hpp">
-      <Filter>DriverUtils</Filter>
-    </ClInclude>
-    <ClInclude Include="BootRepair.h">
-      <Filter>BYOVD</Filter>
-    </ClInclude>
-    <ClInclude Include="BootRepairBin.hpp">
-      <Filter>BYOVD</Filter>
-    </ClInclude>
     <ClInclude Include="va2pa.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="SuperFetch.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="KernelUtils.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="PEUtils.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="MappingDriverBin.hpp">
       <Filter>MappingDriverBin</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverUtils\DriverLoader.h">
+      <Filter>DriverUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverUtils\DriverProvider.hpp">
+      <Filter>DriverUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverUtils\DriverService.hpp">
+      <Filter>DriverUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverUtils\DriverWorker.hpp">
+      <Filter>DriverUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="DriverUtils\ObjectProxy.hpp">
+      <Filter>DriverUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="BYOVD\BiosToolCommonDriver.h">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
+    <ClInclude Include="BYOVD\BiosToolCommonDriverBin.hpp">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
+    <ClInclude Include="BYOVD\BootRepair.h">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
+    <ClInclude Include="BYOVD\BootRepairBin.hpp">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
+    <ClInclude Include="BYOVD\CorMem.h">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
+    <ClInclude Include="BYOVD\CorMemBin.hpp">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\FileUtils.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\KernelUtils.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\PEUtils.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Utils.hpp">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="FileUtils.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Singleton.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CorMem.cpp">
+    <ClCompile Include="DriverUtils\DriverLoader.cpp">
+      <Filter>DriverUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="DriverUtils\DriverProvider.cpp">
+      <Filter>DriverUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="DriverUtils\DriverService.cpp">
+      <Filter>DriverUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="DriverUtils\DriverWorker.cpp">
+      <Filter>DriverUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="BYOVD\BiosToolCommonDriver.cpp">
       <Filter>BYOVD</Filter>
     </ClCompile>
-    <ClCompile Include="BiosToolCommonDriver.cpp">
+    <ClCompile Include="BYOVD\BootRepair.cpp">
       <Filter>BYOVD</Filter>
     </ClCompile>
-    <ClCompile Include="DriverService.cpp">
-      <Filter>DriverUtils</Filter>
-    </ClCompile>
-    <ClCompile Include="DriverProvider.cpp">
-      <Filter>DriverUtils</Filter>
-    </ClCompile>
-    <ClCompile Include="DriverLoader.cpp">
-      <Filter>DriverUtils</Filter>
-    </ClCompile>
-    <ClCompile Include="DriverWorker.cpp">
-      <Filter>DriverUtils</Filter>
-    </ClCompile>
-    <ClCompile Include="BootRepair.cpp">
+    <ClCompile Include="BYOVD\CorMem.cpp">
       <Filter>BYOVD</Filter>
     </ClCompile>
-    <ClCompile Include="KernelUtils.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Utils\FileUtils.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="PEUtils.cpp">
-      <Filter>源文件</Filter>
+    <ClCompile Include="Utils\KernelUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\PEUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Utils.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

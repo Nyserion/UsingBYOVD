@@ -108,6 +108,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>./;./Utils/;./DriverUtils/;./BYOVD/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,6 +125,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>./;./Utils/;./DriverUtils/;./BYOVD/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -131,43 +133,42 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BiosToolCommonDriver.h" />
-    <ClInclude Include="BiosToolCommonDriverBin.hpp" />
-    <ClInclude Include="BootRepair.h" />
-    <ClInclude Include="BootRepairBin.hpp" />
-    <ClInclude Include="CorMem.h" />
-    <ClInclude Include="CorMemBin.hpp" />
-    <ClInclude Include="DriverLoader.h" />
-    <ClInclude Include="DriverProvider.hpp" />
-    <ClInclude Include="DriverService.hpp" />
-    <ClInclude Include="DriverWorker.hpp" />
-    <ClInclude Include="FileUtils.hpp" />
-    <ClInclude Include="KernelUtils.hpp" />
+    <ClInclude Include="BYOVD\BiosToolCommonDriver.h" />
+    <ClInclude Include="BYOVD\BiosToolCommonDriverBin.hpp" />
+    <ClInclude Include="BYOVD\BootRepair.h" />
+    <ClInclude Include="BYOVD\BootRepairBin.hpp" />
+    <ClInclude Include="BYOVD\CorMem.h" />
+    <ClInclude Include="BYOVD\CorMemBin.hpp" />
+    <ClInclude Include="DriverUtils\DriverLoader.h" />
+    <ClInclude Include="DriverUtils\DriverProvider.hpp" />
+    <ClInclude Include="DriverUtils\DriverService.hpp" />
+    <ClInclude Include="DriverUtils\DriverWorker.hpp" />
+    <ClInclude Include="DriverUtils\ObjectProxy.hpp" />
     <ClInclude Include="Log.hpp" />
     <ClInclude Include="MappingDriverBin.hpp" />
-    <ClInclude Include="ObjectProxy.hpp" />
-    <ClInclude Include="PEUtils.hpp" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Resource.hpp" />
     <ClInclude Include="Singleton.hpp" />
     <ClInclude Include="SuperFetch.h" />
-    <ClInclude Include="Utils.hpp" />
+    <ClInclude Include="Utils\FileUtils.hpp" />
+    <ClInclude Include="Utils\KernelUtils.hpp" />
+    <ClInclude Include="Utils\PEUtils.hpp" />
+    <ClInclude Include="Utils\Utils.hpp" />
     <ClInclude Include="va2pa.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BiosToolCommonDriver.cpp" />
-    <ClCompile Include="BootRepair.cpp" />
-    <ClCompile Include="CorMem.cpp" />
-    <ClCompile Include="DriverLoader.cpp" />
-    <ClCompile Include="DriverProvider.cpp" />
-    <ClCompile Include="DriverService.cpp" />
-    <ClCompile Include="DriverWorker.cpp" />
-    <ClCompile Include="FileUtils.cpp" />
-    <ClCompile Include="KernelUtils.cpp" />
+    <ClCompile Include="BYOVD\BiosToolCommonDriver.cpp" />
+    <ClCompile Include="BYOVD\BootRepair.cpp" />
+    <ClCompile Include="BYOVD\CorMem.cpp" />
+    <ClCompile Include="DriverUtils\DriverLoader.cpp" />
+    <ClCompile Include="DriverUtils\DriverProvider.cpp" />
+    <ClCompile Include="DriverUtils\DriverService.cpp" />
+    <ClCompile Include="DriverUtils\DriverWorker.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="PEUtils.cpp" />
     <ClCompile Include="Singleton.cpp" />
-    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Utils\FileUtils.cpp" />
+    <ClCompile Include="Utils\KernelUtils.cpp" />
+    <ClCompile Include="Utils\PEUtils.cpp" />
+    <ClCompile Include="Utils\Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DriverLoader.rc" />
