@@ -525,12 +525,7 @@ $$$$$$$  | $$ | $$ |  $$ | \$$$$$$$ | $$ |       \$$$$$$$ |      $$$$$$$$$ \$  /
 			if (!hProcess)
 			{
 				LOG("PROCESS_QUERY_INFORMATION | PROCESS_VM_READ FAILED code " << GetLastError());
-				hProcess = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, dwPid);
-				if (!hProcess)
-				{
-					LOG("Open Process with PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_VM_READ failed" << GetLastError());
-					break;
-				}
+				break;
 			}
 
 
