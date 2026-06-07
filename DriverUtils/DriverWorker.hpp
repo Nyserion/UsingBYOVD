@@ -3,6 +3,7 @@
 #include "CorMem.h"
 #include "BootRepair.h"
 #include "PGRHostControl.h"
+#include "GGProtect64.h"
 
 
 namespace DriverWorker

@@ -13,8 +13,10 @@ class GGProtect64 final :
 	friend class Singleton<GGProtect64>;
 
 private:
-	static constexpr ULONG IOCTL_KILL_PROCESS = 0x223C04u;
-	static constexpr ULONG IOCTL_DRIVER_LOAD  = 0x223C14u;
+	static constexpr ULONG IOCTL_KILL_PROCESS  = 0x223C04u;
+	static constexpr ULONG IOCTL_DRIVER_LOAD   = 0x223C14u;
+	static constexpr ULONG IOCTL_DRIVER_UNLOAD = 0x223C1Cu;
+
 	static constexpr ULONG CHECK_VALUE = 0x5A84;
 public:
 	explicit GGProtect64(Token) noexcept : GGProtect64()

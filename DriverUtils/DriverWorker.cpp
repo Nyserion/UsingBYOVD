@@ -33,23 +33,45 @@ DriverWorker::Write(
 
 auto DriverWorker::Kill(ULONG Pid) ->BOOLEAN
 {
-	auto bResut = g_BootRepair->Initialize();
+	//auto bResut = g_BootRepair->Initialize();
+	//if (!bResut)
+	//{
+	//	return FALSE;
+	//}
+	//else
+	//{
+	//	LOG("Start BootRepair Driver");
+	//}
+
+	//if (Pid > 4)
+	//{
+	//	//LOG("Kill pid = ") << Pid << std::endl;;
+	//	bResut = g_BootRepair->KillProcess(Pid);
+
+	//}
+
+	//g_BootRepair->Uninitialize();
+	//return bResut;
+
+	auto bResut = g_GGProtect64->Initialize();
 	if (!bResut)
 	{
 		return FALSE;
 	}
 	else
 	{
-		LOG("Start BootRepair Driver");
+		LOG("Start GGProtect64 Driver");
 	}
 
 	if (Pid > 4)
 	{
 		//LOG("Kill pid = ") << Pid << std::endl;;
-		bResut = g_BootRepair->KillProcess(Pid);
+		bResut = g_GGProtect64->KillProcess(Pid);
 
 	}
 
-	g_BootRepair->Uninitialize();
+	// unload will cause BSOD
+	// never call it like this
+	//g_GGProtect64->Uninitialize();
 	return bResut;
 }

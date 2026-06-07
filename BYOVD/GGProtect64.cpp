@@ -64,6 +64,24 @@ GGProtect64::Initialize() noexcept
 
 VOID GGProtect64::Uninitialize()
 {
+	/*if (INVALID_HANDLE_VALUE != m_hDevice)
+	{
+		DWORD dwPid = GetCurrentProcessId() ^ CHECK_VALUE;
+		DWORD dwResult{};
+
+
+		DeviceIoControl(m_hDevice,
+						IOCTL_DRIVER_UNLOAD,
+						&dwPid,
+						sizeof(dwPid),
+						nullptr,
+						0,
+						&dwResult,
+						nullptr);
+	}*/
+
+
+
 	if (m_pDriverService)
 	{
 		m_pDriverService->StopAndUnregister();
