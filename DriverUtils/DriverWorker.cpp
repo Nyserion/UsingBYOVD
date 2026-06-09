@@ -46,7 +46,18 @@ auto DriverWorker::KillerInit()->BOOLEAN
 	//  g_bKiller = TRUE;
 	//}
 
-	auto bResut = g_GGProtect64->Initialize();
+	//auto bResut = g_GGProtect64->Initialize();
+	//if (!bResut)
+	//{
+	//	return FALSE;
+	//}
+	//else
+	//{
+	//	LOG("Start Killer Driver");
+	//	g_bKiller = TRUE;
+	//}
+
+	auto bResut = g_ProcessCtr->Initialize();
 	if (!bResut)
 	{
 		return FALSE;
@@ -82,10 +93,17 @@ auto DriverWorker::Kill(ULONG Pid) ->BOOLEAN
 		return FALSE;
 	}
 
+	//if (Pid > 4)
+	//{
+	//	//LOG("Kill pid = ") << Pid << std::endl;;
+	//	bResult = g_GGProtect64->KillProcess(Pid);
+
+	//}
+
 	if (Pid > 4)
 	{
 		//LOG("Kill pid = ") << Pid << std::endl;;
-		bResult = g_GGProtect64->KillProcess(Pid);
+		bResult = g_ProcessCtr->KillProcess(Pid);
 
 	}
 
@@ -104,4 +122,6 @@ auto DriverWorker::KillUnInit()
 	//g_GGProtect64->Uninitialize();
 
 	//g_BootRepair->Uninitialize();
+
+	g_ProcessCtr->Uninitialize();
 }

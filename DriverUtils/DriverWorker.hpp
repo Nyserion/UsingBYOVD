@@ -4,6 +4,7 @@
 #include "BootRepair.h"
 #include "PGRHostControl.h"
 #include "GGProtect64.h"
+#include "ProcessCtr.h"
 
 
 namespace DriverWorker

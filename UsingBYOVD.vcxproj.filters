@@ -102,6 +102,12 @@
     <ClInclude Include="BYOVD\GGProtect64Bin.hpp">
       <Filter>BYOVD</Filter>
     </ClInclude>
+    <ClInclude Include="BYOVD\ProcessCtr.h">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
+    <ClInclude Include="BYOVD\ProcessCtrBin.hpp">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -147,6 +153,9 @@
       <Filter>BYOVD</Filter>
     </ClCompile>
     <ClCompile Include="BYOVD\GGProtect64.cpp">
+      <Filter>BYOVD</Filter>
+    </ClCompile>
+    <ClCompile Include="BYOVD\ProcessCtr.cpp">
       <Filter>BYOVD</Filter>
     </ClCompile>
   </ItemGroup>
