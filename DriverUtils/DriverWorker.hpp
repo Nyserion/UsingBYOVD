@@ -1,10 +1,5 @@
 #pragma once
-#include "BiosToolCommonDriver.h"
-#include "CorMem.h"
-#include "BootRepair.h"
-#include "PGRHostControl.h"
-#include "GGProtect64.h"
-#include "ProcessCtr.h"
+#include <windows.h>
 
 
 namespace DriverWorker

@@ -54,5 +54,10 @@ build
 remove process protect 
 ![image](./pics/remove%20lsass%20protection_2026-06-05_190608_025.png)
 
-dmp file
-![image](./pics/dmp%20file_2026-06-05_191338_890.png)
+dmp file  
+![image](./pics/dmp%20file_2026-06-05_191338_890.png)  
+
+
+**Update DriverSelector**  
+**Just switch the BYOVD driver you want to use in the DriverSelector file.**   
+只要在文件DriverSelector切换你想使用的漏洞驱动即可，注意相应的类型。  

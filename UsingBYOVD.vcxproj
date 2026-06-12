@@ -147,6 +147,7 @@
     <ClInclude Include="BYOVD\ProcessCtrBin.hpp" />
     <ClInclude Include="DriverUtils\DriverLoader.h" />
     <ClInclude Include="DriverUtils\DriverProvider.hpp" />
+    <ClInclude Include="DriverUtils\DriverSelector.hpp" />
     <ClInclude Include="DriverUtils\DriverService.hpp" />
     <ClInclude Include="DriverUtils\DriverWorker.hpp" />
     <ClInclude Include="DriverUtils\ObjectProxy.hpp" />

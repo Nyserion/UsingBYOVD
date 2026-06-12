@@ -108,6 +108,9 @@
     <ClInclude Include="BYOVD\ProcessCtrBin.hpp">
       <Filter>BYOVD</Filter>
     </ClInclude>
+    <ClInclude Include="DriverUtils\DriverSelector.hpp">
+      <Filter>DriverUtils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

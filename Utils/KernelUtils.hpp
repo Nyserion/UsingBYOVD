@@ -4,6 +4,7 @@
 #include "Singleton.hpp"
 #include "ObjectProxy.hpp"
 #include "DriverWorker.hpp"
+#include "Log.hpp"
 
 #ifndef POOL_FLAG_NON_PAGED_EXECUTE
 #define POOL_FLAG_NON_PAGED_EXECUTE       0x0000000000000080UI64     // Non paged pool executable

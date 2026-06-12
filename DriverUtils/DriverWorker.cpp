@@ -1,18 +1,19 @@
 #include "DriverWorker.hpp"
 #include "Log.hpp"
+#include "DriverSelector.hpp"
 
 static BOOLEAN g_bKiller{FALSE};
 
 auto
 DriverWorker::InitializeDriver() -> BOOLEAN
 {
-	return g_PGRHostControl->Initialize();
+	return CurrentProvider()->Initialize();
 }
 
 auto
 DriverWorker::UninitializeDriver() -> VOID
 {
-	g_PGRHostControl->Uninitialize();
+	CurrentProvider()->Uninitialize();
 }
 
 auto 
@@ -21,7 +22,7 @@ DriverWorker::Read(
 	PVOID ReadBuffer, 
 	ULONG Size) ->BOOLEAN
 {
-	return g_PGRHostControl->Read(VirtualAddress, ReadBuffer, Size);
+	return CurrentProvider()->Read(VirtualAddress, ReadBuffer, Size);
 }
 
 auto 
@@ -30,34 +31,12 @@ DriverWorker::Write(
 	PVOID WriteBuffer,
 	ULONG Size) ->BOOLEAN
 {
-	return g_PGRHostControl->Write(VirtualAddress, WriteBuffer, Size);
+	return CurrentProvider()->Write(VirtualAddress, WriteBuffer, Size);
 }
 
 auto DriverWorker::KillerInit()->BOOLEAN
 {
-	//auto bResut = g_BootRepair->Initialize();
-	//if (!bResut)
-	//{
-	//	return FALSE;
-	//}
-	//else
-	//{
-	//	LOG("Start BootRepair Driver");
-	//  g_bKiller = TRUE;
-	//}
-
-	//auto bResut = g_GGProtect64->Initialize();
-	//if (!bResut)
-	//{
-	//	return FALSE;
-	//}
-	//else
-	//{
-	//	LOG("Start Killer Driver");
-	//	g_bKiller = TRUE;
-	//}
-
-	auto bResut = g_ProcessCtr->Initialize();
+	auto bResut = CurrentKiller()->Initialize();
 	if (!bResut)
 	{
 		return FALSE;
@@ -77,14 +56,7 @@ auto DriverWorker::KillerInit()->BOOLEAN
 auto DriverWorker::Kill(ULONG Pid) ->BOOLEAN
 {
 
-	//if (Pid > 4)
-	//{
-	//	//LOG("Kill pid = ") << Pid << std::endl;;
-	//	bResut = g_BootRepair->KillProcess(Pid);
-
-	//}
-
-	//return bResut;
+	
 
 	auto bResult{ FALSE };
 
@@ -94,17 +66,12 @@ auto DriverWorker::Kill(ULONG Pid) ->BOOLEAN
 		return FALSE;
 	}
 
-	//if (Pid > 4)
-	//{
-	//	//LOG("Kill pid = ") << Pid << std::endl;;
-	//	bResult = g_GGProtect64->KillProcess(Pid);
-
-	//}
+	
 
 	if (Pid > 4)
 	{
 		LOG("Kill pid = ") << Pid << std::endl;;
-		bResult = g_ProcessCtr->KillProcess(Pid);
+		bResult = CurrentKiller()->KillProcess(Pid);
 
 	}
 
@@ -120,9 +87,6 @@ auto DriverWorker::KillUnInit()
 	{
 		return;
 	}
-	//g_GGProtect64->Uninitialize();
 
-	//g_BootRepair->Uninitialize();
-
-	g_ProcessCtr->Uninitialize();
+	CurrentKiller()->Uninitialize();
 }
