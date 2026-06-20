@@ -374,7 +374,7 @@ DriverLoader::KillAllAvOrEdr()
 		} while (Process32Next(hSnapshot, &pe32));
 	}
 
-	CloseHandle(hSnapshot);
+	Utils::NtClose(hSnapshot);
 }
 
 auto DriverLoader::InitMemoryManager() ->BOOLEAN

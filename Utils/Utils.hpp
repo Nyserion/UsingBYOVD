@@ -101,6 +101,19 @@ public:
 		PVOID              EaBuffer,
 		ULONG              EaLength) noexcept;
 
+
+	NTSTATUS NtWriteFile(
+		HANDLE FileHandle,
+		HANDLE Event, 
+		PVOID ApcRoutine, 
+		PVOID ApcContext, 
+		PIO_STATUS_BLOCK IoStatusBlock, 
+		PVOID Buffer,
+		ULONG Length,
+		PLARGE_INTEGER ByteOffset, 
+		PULONG Key) noexcept;
+
+
 private:
 	UtilsImpl() noexcept = default;
 	bool m_initialized{ false };
@@ -140,17 +153,27 @@ namespace Utils
 	
 
 
-	 NTSTATUS NtCreateFile(
-		 PHANDLE            FileHandle,
-		 ACCESS_MASK        DesiredAccess,
-		 POBJECT_ATTRIBUTES ObjectAttributes,
-		 PIO_STATUS_BLOCK   IoStatusBlock,
-		 PLARGE_INTEGER     AllocationSize,
-		 ULONG              FileAttributes,
-		 ULONG              ShareAccess,
-		 ULONG              CreateDisposition,
-		 ULONG              CreateOptions,
-		 PVOID              EaBuffer,
-		 ULONG              EaLength) noexcept;
+	NTSTATUS NtCreateFile(PHANDLE            FileHandle,
+						  ACCESS_MASK        DesiredAccess,
+						  POBJECT_ATTRIBUTES ObjectAttributes,
+						  PIO_STATUS_BLOCK   IoStatusBlock,
+						  PLARGE_INTEGER     AllocationSize,
+						  ULONG              FileAttributes,
+						  ULONG              ShareAccess,
+						  ULONG              CreateDisposition,
+						  ULONG              CreateOptions,
+						  PVOID              EaBuffer,
+						  ULONG              EaLength) noexcept;
+
+
+	NTSTATUS NtWriteFile(HANDLE FileHandle,
+						 HANDLE Event,
+						 PVOID ApcRoutine,
+						 PVOID ApcContext,
+						 PIO_STATUS_BLOCK IoStatusBlock,
+						 PVOID Buffer,
+						 ULONG Length,
+						 PLARGE_INTEGER ByteOffset,
+						 PULONG Key) noexcept;
 	
 }

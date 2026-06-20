@@ -150,7 +150,7 @@ VOID DriverProvider<T>::Uninitialize()
 
 	if (INVALID_HANDLE_VALUE != m_hDevice)
 	{
-		CloseHandle(m_hDevice);
+		Utils::NtClose(m_hDevice);
 		m_hDevice = INVALID_HANDLE_VALUE;
 	}
 

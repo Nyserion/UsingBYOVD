@@ -3,6 +3,7 @@
 #include <fstream>
 #include <array>
 #include <random>
+#include "Utils.hpp"
 
 #include "Log.hpp"
 
@@ -32,15 +33,14 @@ CreateRandomFileName(const size_t length = 16)
 	return name;
 }
 
-static
+static 
 std::string 
-CreateDriverFilePath()
+CreateDriver(HANDLE& hFile)
 {
 	namespace fs = std::filesystem;
 
 	try
 	{
-		// Get tmp path
 		auto tempPath = fs::temp_directory_path();
 		if (tempPath.empty())
 		{
@@ -48,38 +48,69 @@ CreateDriverFilePath()
 			return {};
 		}
 
-		// get random file name
-		std::string strRandomFileName = CreateRandomFileName(12);
-		if (strRandomFileName.empty())
+		std::string randomName = CreateRandomFileName(12);
+		if (randomName.empty())
 		{
-			strRandomFileName = "tempfile_" + std::to_string(std::time(nullptr));
+			randomName = "tempfile_" + std::to_string(std::time(nullptr));
 		}
 
-		// get full name
-		auto fullPath = tempPath / strRandomFileName;
+		fs::path fullPath = tempPath / randomName;
 		fullPath.replace_extension(".sys");
 
+		std::wstring win32Path = fullPath.wstring();
 
+		std::wstring ntPath = L"\\??\\" + win32Path;
+
+		UNICODE_STRING uniPath {};
+		RtlInitUnicodeString(&uniPath, ntPath.c_str());
+
+		OBJECT_ATTRIBUTES objAttr {};
+		InitializeObjectAttributes(&objAttr, &uniPath,
+								   OBJ_CASE_INSENSITIVE,
+								   nullptr, nullptr);
+
+		IO_STATUS_BLOCK ioStatus{};
+		HANDLE hTmpFile { nullptr };
+
+		NTSTATUS status = Utils::NtCreateFile(&hTmpFile,
+											  FILE_GENERIC_WRITE | SYNCHRONIZE | DELETE,
+											  &objAttr,
+											  &ioStatus,
+											  nullptr,
+											  FILE_ATTRIBUTE_NORMAL,
+											  FILE_SHARE_READ | FILE_SHARE_WRITE,
+											  FILE_CREATE,
+											  FILE_SYNCHRONOUS_IO_NONALERT | FILE_NON_DIRECTORY_FILE,
+											  nullptr,
+											  0);
+
+		if (!NT_SUCCESS(status))
+		{
+			LOG("[-] SC_NtCreateFile failed: 0x" << std::hex << status << std::dec);
+			return {};
+		}
+
+		//LOG("[+] Driver file created successfully, Handle: 0x" << std::hex << hTmpFile << std::dec);
+		hFile = hTmpFile;
 		return fullPath.string();
 	}
-	catch (const std::exception& e [[maybe_unused]])
+	catch (const std::exception& e)
 	{
 #if _DEBUG
-		LOG("[-] Exception in CreateDriverFilePath: " << e.what());
+		LOG("[-] Exception in CreateDriverFile: " << e.what());
 #endif
 		return {};
 	}
 }
-
 static
 bool 
 CreateFileFromMemory(
-	const std::string_view& filePath,
+	const HANDLE&			fileHandle,
 	const char*				data, 
 	const size_t			size, 
 	const unsigned char		key)
 {
-	if (filePath.empty() || data == nullptr || size == 0)
+	if (!fileHandle || data == nullptr || size == 0)
 	{
 		LOG("[-] Invalid parameters for CreateFileFromMemory");
 		return false;
@@ -92,23 +123,22 @@ CreateFileFromMemory(
 		vecData ^= key;
 	}
 
-	std::ofstream outFile(filePath.data(), std::ios::binary | std::ios::out);
-	if (!outFile.is_open())
+	IO_STATUS_BLOCK ioStatus{};
+	auto status = Utils::NtWriteFile(fileHandle,
+									 nullptr,
+									 nullptr,
+									 nullptr,
+									 &ioStatus,
+									 buffer.data(),
+									 buffer.size(),
+									 nullptr,
+									 nullptr);
+	if (!NT_SUCCESS(status))
 	{
-		LOG("[-] Failed to create file: " << filePath);
+		LOG("[-] NtWriteFile failed: 0x" << std::hex << status << std::dec);
 		return false;
 	}
 
-	outFile.write(buffer.data(), buffer.size());
-	if (!outFile.good())
-	{
-		LOG("[-] Failed to write data to file: " << filePath);
-		outFile.close();
-		return false;
-	}
-
-	outFile.close();
-	
 	return true;
 }
 
@@ -118,16 +148,24 @@ bool FileUtils::CreateDriverFile(
 	const size_t		size, 
 	const unsigned char key)
 {
-	auto tmpPath = CreateDriverFilePath();
-	if (tmpPath.empty())
+	HANDLE hFile{ nullptr };
+	auto driverPath = CreateDriver(hFile);
+	if (!hFile || driverPath.empty())
 	{
-		LOG("[-] Failed to create driver file path");
+		LOG("[-] Failed to create driver file	");
 		return false;
 	}
 	
+	driverFullPath = driverPath;
+	auto bResult = CreateFileFromMemory(hFile, filedata, size, key);
 
-	driverFullPath = tmpPath;
-	return CreateFileFromMemory(tmpPath, filedata, size, key);
+	if (hFile)
+	{
+		SC_NtClose(hFile);
+		hFile = nullptr;
+	}
+
+	return bResult;
 }
 
 std::string 

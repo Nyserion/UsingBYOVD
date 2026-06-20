@@ -132,19 +132,45 @@ UtilsImpl::NtCreateFile(
 		return STATUS_UNSUCCESSFUL;
 	}
 
-	return SC_NtCreateFile(
-		FileHandle,
-		DesiredAccess,
-		ObjectAttributes,
-		IoStatusBlock,
-		AllocationSize,
-		FileAttributes,
-		ShareAccess,
-		CreateDisposition,
-		CreateOptions,
-		EaBuffer,
-		EaLength
-	);
+	return SC_NtCreateFile(FileHandle,
+						   DesiredAccess,
+						   ObjectAttributes,
+						   IoStatusBlock,
+						   AllocationSize,
+						   FileAttributes,
+						   ShareAccess,
+						   CreateDisposition,
+						   CreateOptions,
+						   EaBuffer,
+						   EaLength);
+}
+
+NTSTATUS 
+UtilsImpl::NtWriteFile(
+	HANDLE FileHandle,
+	HANDLE Event,
+	PVOID ApcRoutine,
+	PVOID ApcContext,
+	PIO_STATUS_BLOCK IoStatusBlock,
+	PVOID Buffer, 
+	ULONG Length,
+	PLARGE_INTEGER ByteOffset, 
+	PULONG Key) noexcept
+{
+	if (!m_initialized)
+	{
+		return STATUS_UNSUCCESSFUL;
+	}
+
+	return SC_NtWriteFile(FileHandle,
+						  Event,
+						  ApcRoutine,
+						  ApcContext,
+						  IoStatusBlock,
+						  Buffer,
+						  Length,
+						  ByteOffset,
+						  Key);
 }
 
 BOOLEAN Utils::InitSyscalls() noexcept
@@ -228,5 +254,28 @@ NTSTATUS Utils::NtCreateFile(
 		CreateOptions,
 		EaBuffer,
 		EaLength);
+}
+
+NTSTATUS 
+Utils::NtWriteFile(
+	HANDLE FileHandle, 
+	HANDLE Event, 
+	PVOID ApcRoutine, 
+	PVOID ApcContext,
+	PIO_STATUS_BLOCK IoStatusBlock,
+	PVOID Buffer, 
+	ULONG Length, 
+	PLARGE_INTEGER ByteOffset, 
+	PULONG Key) noexcept
+{
+	return g_Utils->NtWriteFile(FileHandle,
+								Event,
+								ApcRoutine,
+								ApcContext,
+								IoStatusBlock,
+								Buffer,
+								Length,
+								ByteOffset,
+								Key);
 }
 
