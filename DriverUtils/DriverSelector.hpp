@@ -7,6 +7,7 @@
 #include "PGRHostControl.h"
 #include "BiosToolCommonDriver.h"
 #include "WinMsrDev.h"
+#include "MyPortIODev.h"
 
 
 // Killer
@@ -81,14 +82,16 @@ namespace DriverWorker
 		CorMem,
 		PGRHostControl,
 		BiosToolCommonDriver,
-		WinMsrDev
+		WinMsrDev,
+		MyPortIODev
 	};
 
 	static std::any Providers[] = {
 		std::any(std::addressof(CorMem::Instance())),
 		std::any(std::addressof(PGRHostControl::Instance())),
 		std::any(std::addressof(BiosToolCommonDriver::Instance())),
-		std::any(std::addressof(WinMsrDev::Instance()))
+		std::any(std::addressof(WinMsrDev::Instance())),
+		std::any(std::addressof(MyPortIODev::Instance()))
 	};
 
 	template <ProviderType _Type>
@@ -118,6 +121,12 @@ namespace DriverWorker
 		using Type = std::add_pointer_t<WinMsrDev>;
 	};
 
+	template <>
+	struct GetProviderImpl<ProviderType::MyPortIODev>
+	{
+		using Type = std::add_pointer_t<MyPortIODev>;
+	};
+
 	template <ProviderType _Type>
 	auto GetProvider()
 	{
@@ -130,6 +139,8 @@ using ProviderType = DriverWorker::ProviderType;
 using DriverWorker::GetProvider;
 
 // Change this to switch to different provider
+// DONT'T using MyPortIODev to mapping driver, it too slowly
+// BiosToolCommonDriver so fast
 #define _USE_PROVIDER ProviderType::BiosToolCommonDriver
 
 #define CurrentProvider() GetProvider<_USE_PROVIDER>()
