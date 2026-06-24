@@ -365,3 +365,6 @@ FodyWeavers.xsd
 /BYOVD/KslD.h
 /BYOVD/KslDBin.hpp
 /Syscalls/bak
+/BYOVD/WinNotify.cpp
+/BYOVD/WinNotify.h
+/BYOVD/WinNotifyBin.hpp

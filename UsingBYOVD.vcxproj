@@ -148,6 +148,8 @@
     <ClInclude Include="BYOVD\CorMemBin.hpp" />
     <ClInclude Include="BYOVD\GGProtect64.h" />
     <ClInclude Include="BYOVD\GGProtect64Bin.hpp" />
+    <ClInclude Include="BYOVD\HWAudioX64.h" />
+    <ClInclude Include="BYOVD\HWAudioX64Bin.hpp" />
     <ClInclude Include="BYOVD\KslD.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -195,6 +197,7 @@
     <ClCompile Include="BYOVD\BootRepair.cpp" />
     <ClCompile Include="BYOVD\CorMem.cpp" />
     <ClCompile Include="BYOVD\GGProtect64.cpp" />
+    <ClCompile Include="BYOVD\HWAudioX64.cpp" />
     <ClCompile Include="BYOVD\KslD.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>

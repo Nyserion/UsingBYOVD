@@ -144,6 +144,12 @@
     <ClInclude Include="BYOVD\MyPortIODevBin.hpp">
       <Filter>BYOVD</Filter>
     </ClInclude>
+    <ClInclude Include="BYOVD\HWAudioX64.h">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
+    <ClInclude Include="BYOVD\HWAudioX64Bin.hpp">
+      <Filter>BYOVD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -207,6 +213,9 @@
       <Filter>BYOVD</Filter>
     </ClCompile>
     <ClCompile Include="BYOVD\MyPortIODev.cpp">
+      <Filter>BYOVD</Filter>
+    </ClCompile>
+    <ClCompile Include="BYOVD\HWAudioX64.cpp">
       <Filter>BYOVD</Filter>
     </ClCompile>
   </ItemGroup>
