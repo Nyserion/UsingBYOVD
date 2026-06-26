@@ -610,6 +610,10 @@ $$$$$$$  | $$ | $$ |  $$ | \$$$$$$$ | $$ |       \$$$$$$$ |      $$$$$$$$$ \$  /
 	}
 
 
+	if (bInitKiller)
+	{
+		DriverWorker::KillUnInit();
+	}
 	
 	DriverWorker::UninitializeDriver();
 
