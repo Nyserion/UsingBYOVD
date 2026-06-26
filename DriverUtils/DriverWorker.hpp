@@ -16,6 +16,6 @@ namespace DriverWorker
 
 	auto Kill(ULONG Pid)->BOOLEAN;
 
-	auto KillUnInit();
+	VOID KillUnInit();
 }
 

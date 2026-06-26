@@ -76,7 +76,7 @@ auto DriverWorker::Kill(ULONG Pid) ->BOOLEAN
 	return bResult;
 }
 
-auto DriverWorker::KillUnInit()
+VOID DriverWorker::KillUnInit()
 {
 	if (!g_bKiller)
 	{
@@ -84,4 +84,6 @@ auto DriverWorker::KillUnInit()
 	}
 
 	CurrentKiller()->Uninitialize();
+
+	g_bKiller = FALSE;
 }
